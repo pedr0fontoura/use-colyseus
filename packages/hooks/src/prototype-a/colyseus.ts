@@ -1,7 +1,7 @@
 import { Client, Room, ErrorCode } from "colyseus.js";
 import { Schema } from "@colyseus/schema";
 
-import { store } from "./store";
+import { store } from "../utils/store";
 
 type SchemaConstructor<T extends Schema> = new (...args: any[]) => T;
 

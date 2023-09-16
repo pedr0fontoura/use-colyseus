@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+      "target": "ESNext",
+      "moduleResolution": "Node",
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "strict": true,
+      "noUncheckedIndexedAccess": true,
+      "noImplicitOverride": true,
+      "forceConsistentCasingInFileNames": true,
+      "useDefineForClassFields": false,
+      "experimentalDecorators": true,
+      "types": ["@types/node"],
+      "paths": {
+        "server": ["./src/index.ts"],
+        "server/*": ["./src/*"],
+        "shared": ["../shared/src/index.ts"],
+        "shared/*": ["../shared/src/*"]
+      }
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
