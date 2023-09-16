@@ -4,7 +4,28 @@ import colyseusLogo from "./assets/colyseus.png";
 
 import "./App.css";
 
+import {
+  connectToColyseus,
+  disconnectFromColyseus,
+  useColyseusState,
+} from "./colyseus";
+import { useEffect } from "react";
+
 function App() {
+  const state = useColyseusState();
+
+  useEffect(() => {
+    (async () => {
+      await connectToColyseus("test");
+    })();
+
+    return () => {
+      disconnectFromColyseus();
+    };
+  }, []);
+
+  if (!state) return null;
+
   return (
     <>
       <div>
@@ -23,6 +44,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React + Colyseus</h1>
+      <p>{state.networkTime}</p>
       <p className="read-the-docs">
         Click on the Vite, React and Colyseus logos to learn more
       </p>

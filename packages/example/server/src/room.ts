@@ -6,10 +6,12 @@ import { GameState } from "shared/schema";
 export class GameRoom extends Room<GameState> {
   // When room is initialized
   override onCreate(options: any) {
+    console.log("Creating room ...");
+
     this.setState(new GameState());
 
     this.setSimulationInterval((deltaTime) => {
-      this.state.networkTime += this.clock.currentTime;
+      this.state.networkTime = this.clock.currentTime;
     });
   }
 
@@ -20,6 +22,7 @@ export class GameRoom extends Room<GameState> {
 
   // When client successfully join the room
   override onJoin(client: Client, options: any, auth: any) {
+    console.log(`Client ${client.sessionId} connected to room ${this.roomId}`);
     this.state.clients += 1;
   }
 
@@ -29,5 +32,7 @@ export class GameRoom extends Room<GameState> {
   }
 
   // Cleanup callback, called after there are no more clients in the room. (see `autoDispose`)
-  override onDispose() {}
+  override onDispose() {
+    console.log("Disposing room ...");
+  }
 }
