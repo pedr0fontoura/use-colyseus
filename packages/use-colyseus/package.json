@@ -1,6 +1,6 @@
 {
   "name": "use-colyseus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Set of utility React hooks to use Colyseus with React.",
   "type": "module",
   "main": "./dist/index.js",
