@@ -1,5 +1,5 @@
-import { Schema } from "@colyseus/schema";
-import { Client, Room } from "colyseus.js";
+import { type Schema } from "@colyseus/schema";
+import { Client, type Room } from "colyseus.js";
 import { useSyncExternalStore } from "react";
 
 import { store } from "./store";
