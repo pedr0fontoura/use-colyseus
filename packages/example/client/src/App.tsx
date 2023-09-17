@@ -12,7 +12,7 @@ import {
 import { useEffect } from "react";
 
 function App() {
-  const state = useColyseusState();
+  const networkTime = useColyseusState((state) => state.networkTime);
 
   useEffect(() => {
     (async () => {
@@ -24,7 +24,7 @@ function App() {
     };
   }, []);
 
-  if (!state) return null;
+  if (!networkTime) return null;
 
   return (
     <>
@@ -44,7 +44,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React + Colyseus</h1>
-      <p>{state.networkTime}</p>
+      <p>{networkTime}</p>
       <p className="read-the-docs">
         Click on the Vite, React and Colyseus logos to learn more
       </p>

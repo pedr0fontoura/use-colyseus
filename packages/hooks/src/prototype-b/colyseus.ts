@@ -66,7 +66,11 @@ export const colyseus = <S extends Schema>(
     return useSyncExternalStore(subscribe, getSnapshot);
   };
 
-  const useColyseusState = () => {
+  function useColyseusState(): S | undefined;
+  function useColyseusState<T extends (state: S) => unknown>(
+    selector: T
+  ): ReturnType<T> | undefined;
+  function useColyseusState<T extends (state: S) => unknown>(selector?: T) {
     const subscribe = (callback: () => void) =>
       stateStore.subscribe(() => {
         callback();
@@ -74,11 +78,11 @@ export const colyseus = <S extends Schema>(
 
     const getSnapshot = () => {
       const state = stateStore.get();
-      return state;
+      return state && selector ? selector(state) : state;
     };
 
     return useSyncExternalStore(subscribe, getSnapshot);
-  };
+  }
 
   return {
     client,
