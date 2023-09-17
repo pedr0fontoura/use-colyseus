@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Set of utility React hooks to use Colyseus with React.",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -19,6 +19,7 @@
     "hook"
   ],
   "files": [
+    "dist",
     "README.md"
   ],
   "repository": {
