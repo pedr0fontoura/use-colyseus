@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "ts-node-dev --rs --respawn -r tsconfig-paths/register src/index.ts",
     "check": "tsc --noEmit",

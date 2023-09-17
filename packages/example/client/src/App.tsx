@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import colyseusLogo from "./assets/colyseus.png";
@@ -9,7 +11,6 @@ import {
   disconnectFromColyseus,
   useColyseusState,
 } from "./colyseus";
-import { useEffect } from "react";
 
 function App() {
   const networkTime = useColyseusState((state) => state.networkTime);

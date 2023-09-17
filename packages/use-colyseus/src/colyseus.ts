@@ -2,7 +2,7 @@ import { Schema } from "@colyseus/schema";
 import { Client, Room } from "colyseus.js";
 import { useSyncExternalStore } from "react";
 
-import { store } from "../utils/store";
+import { store } from "./store";
 
 export const colyseus = <S extends Schema>(
   endpoint: string,
@@ -54,7 +54,7 @@ export const colyseus = <S extends Schema>(
     } catch {}
   };
 
-  const useColyseus = () => {
+  const useColyseusRoom = () => {
     const subscribe = (callback: () => void) =>
       roomStore.subscribe(() => callback());
 
@@ -88,7 +88,7 @@ export const colyseus = <S extends Schema>(
     client,
     connectToColyseus,
     disconnectFromColyseus,
-    useColyseus,
+    useColyseusRoom,
     useColyseusState,
   };
 };

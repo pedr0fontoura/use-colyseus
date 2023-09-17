@@ -15,5 +15,3 @@ export function store<T>(value: T) {
 
   return { get, set, subscribe };
 }
-
-export const createStore = store;

@@ -1,11 +1,10 @@
-import { colyseus } from "../../../hooks/src/prototype-b";
-
+import { colyseus } from "use-colyseus";
 import { GameState } from "shared/schema";
 
 export const {
   client,
   connectToColyseus,
   disconnectFromColyseus,
-  useColyseus,
+  useColyseusRoom,
   useColyseusState,
 } = colyseus("ws://localhost:2567", GameState);
