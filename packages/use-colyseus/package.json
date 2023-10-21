@@ -27,11 +27,11 @@
     "url": "https://github.com/pedr0fontoura/use-colyseus.git"
   },
   "dependencies": {
-    "colyseus.js": "^0.15.13",
+    "@colyseus/schema": "^2.0.20",
+    "colyseus.js": "^0.15.14",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@colyseus/schema": "^2.0.14",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
