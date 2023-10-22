@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 
 import { store } from "./store";
 
-export const colyseus = <S extends Schema>(
+export const colyseus = <S = Schema>(
   endpoint: string,
   schema?: new (...args: unknown[]) => S
 ) => {
@@ -27,6 +27,7 @@ export const colyseus = <S extends Schema>(
       stateStore.set(room.state);
 
       room.onStateChange((state) => {
+        if (!state || typeof state !== "object") return;
         stateStore.set(Object.setPrototypeOf({ ...state }, state));
       });
 

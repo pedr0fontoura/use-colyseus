@@ -1,6 +1,6 @@
 {
   "name": "use-colyseus",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Set of utility React hooks to use Colyseus with React.",
   "license": "MIT",
   "type": "module",
