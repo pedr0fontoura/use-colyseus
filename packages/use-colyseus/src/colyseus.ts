@@ -6,7 +6,7 @@ import { store } from "./store";
 
 export const colyseus = <S extends Schema>(
   endpoint: string,
-  schema: new (...args: unknown[]) => S
+  schema?: new (...args: unknown[]) => S
 ) => {
   const client = new Client(endpoint);
 
