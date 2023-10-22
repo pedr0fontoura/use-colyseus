@@ -25,7 +25,7 @@ This package still needs to be battle-tested for production, but it gives a good
       disconnectFromColyseus,
       useColyseusRoom,
       useColyseusState,
-    } = colyseus('ws://localhost:2567', GameState);
+    } = colyseus<GameState>('ws://localhost:2567');
     ```
 3. Import the hooks from your newly created `colyseus.ts` file and start building :)
 
@@ -37,7 +37,7 @@ This package still needs to be battle-tested for production, but it gives a good
   
   #### Parameters:
   - endpoint: `string`
-  - schema: `Schema`
+  - schema?: `Schema`
   
   #### Return:
   - `Client`
@@ -54,7 +54,7 @@ This package still needs to be battle-tested for production, but it gives a good
       disconnectFromColyseus,
       useColyseusRoom,
       useColyseusState,
-    } = colyseus('ws://localhost:2567', GameState);
+    } = colyseus<GameState>('ws://localhost:2567');
   ```
 
 - ### `connectToColyseus`
