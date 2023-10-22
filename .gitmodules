@@ -1,0 +1,3 @@
+[submodule "examples/axie-multiplayer-colyseus"]
+	path = examples/axie-multiplayer-colyseus
+	url = git@github.com:endel/axie-multiplayer-colyseus.git
