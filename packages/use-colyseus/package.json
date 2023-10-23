@@ -1,6 +1,6 @@
 {
   "name": "use-colyseus",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Set of utility React hooks to use Colyseus with React.",
   "license": "MIT",
   "type": "module",
@@ -11,7 +11,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "publish": "pnpm run build && pnpm publish"
+    "publish-package": "pnpm run build && pnpm publish"
   },
   "author": "Pedro Fontoura",
   "keywords": [
