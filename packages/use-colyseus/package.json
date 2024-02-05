@@ -4,13 +4,14 @@
   "description": "Set of utility React hooks to use Colyseus with React.",
   "license": "MIT",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "test": "vitest",
     "publish-package": "pnpm run build && pnpm publish"
   },
   "author": "Pedro Fontoura",
@@ -34,16 +35,22 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "@colyseus/testing": "^0.15.2",
+    "@colyseus/tools": "^0.15.35",
+    "@testing-library/react": "^14.2.1",
+    "@types/node": "^20.11.16",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react": "^4.2.1",
+    "colyseus": "^0.15.15",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "vite-plugin-dts": "^3.5.3"
+    "vite": "^5.0.12",
+    "vite-plugin-dts": "^3.5.3",
+    "vitest": "^1.2.2"
   }
 }
