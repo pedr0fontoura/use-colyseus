@@ -24,8 +24,6 @@ export class GameState extends Schema {
 export class GameRoom extends Room<GameState> {
   // When room is initialized
   override onCreate(options: any) {
-    console.log("Creating room ...");
-
     this.setState(new GameState());
 
     this.setSimulationInterval((deltaTime) => {
