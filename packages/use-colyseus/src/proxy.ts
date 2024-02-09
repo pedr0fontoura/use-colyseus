@@ -6,7 +6,8 @@ export const proxy = (target: object, path: string[]) => {
 
       const value = target[key as string];
 
-      // We just want the enumerable properties
+      // NOTE(pedr0fontoura): We just want the enumerable properties from the schema.
+      // For some reason some of the keys are missing if we don't wait for Colyseus first patch.
       const keys = Object.keys(target);
       if (!keys.includes(key as string)) return value;
 
