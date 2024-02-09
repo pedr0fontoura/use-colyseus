@@ -1,7 +1,9 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { ColyseusTestServer, boot } from "@colyseus/testing";
+import { render, screen } from "@testing-library/react";
 
 import { proxy } from "../src/proxy";
+import { colyseus } from "../src/colyseus";
 
 import { GameState, gameConfig, NestedSchema } from "./room";
 
@@ -44,23 +46,25 @@ describe("useColyseus hook", () => {
     expect(path).toEqual(["arrayOfNestedSchemas", "0", "x"]);
   });
 
-  // it("should work LOL", async () => {
-  //   const room = await server.createRoom<GameState>("my_room");
-  //   const client = await server.connectTo(room);
+  it("should return deeply nested values", async () => {
+    const room = await server.createRoom<GameState>("my_room");
+    const client = await server.connectTo(room);
 
-  //   const Component = () => {
-  //     const { useColyseusState } = colyseus(client);
-  //     const clients = useColyseusState((s) => s.clients);
+    room.state.arrayOfNestedSchemas.push(new NestedSchema());
 
-  //     console.log(`From component: clients = ${clients}`);
+    await room.waitForNextPatch();
 
-  //     return null;
-  //   };
+    const Component = () => {
+      const { useColyseusState } = colyseus(client);
+      const deepNestedX = useColyseusState((s) => s.arrayOfNestedSchemas[0].x);
 
-  //   await room.waitForNextPatch();
+      return <div data-testid="deeply-nested-value">{deepNestedX}</div>;
+    };
 
-  //   render(<Component />);
+    render(<Component />);
 
-  //   expect(client.state.clients).toBe(1);
-  // });
+    expect(screen.getByTestId("deeply-nested-value").textContent).toContain(
+      "0"
+    );
+  });
 });
