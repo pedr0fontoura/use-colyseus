@@ -1,6 +1,11 @@
-import { Schema, type } from "@colyseus/schema";
+import { ArraySchema, Schema, type } from "@colyseus/schema";
 import { Room, Client } from "colyseus";
 import config from "@colyseus/tools";
+
+export class NestedSchema extends Schema {
+  @type("number") x = 0;
+  @type("number") y = 0;
+}
 
 export class GameState extends Schema {
   @type("number")
@@ -8,6 +13,12 @@ export class GameState extends Schema {
 
   @type("number")
   clients = 0;
+
+  @type(NestedSchema)
+  nested = new NestedSchema();
+
+  @type([NestedSchema])
+  arrayOfNestedSchemas = new ArraySchema<NestedSchema>();
 }
 
 export class GameRoom extends Room<GameState> {

@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [react(), dts({ rollupTypes: true })],
   test: {
     include: ["**.spec.ts", "**.spec.tsx"],
+    environment: "jsdom",
   },
   build: {
     lib: {

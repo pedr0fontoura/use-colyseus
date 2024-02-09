@@ -2,6 +2,7 @@
     "compilerOptions": {
       "useDefineForClassFields": false,
       "experimentalDecorators": true,
+      "jsx": "react-jsx",
     },
   }
   
