@@ -99,4 +99,33 @@ describe("useColyseus hook", () => {
 
     expect(cachedNetworkTime).not.toBe(updatedNetworkTime);
   });
+
+  it("should return collection items", async () => {
+    const room = await server.createRoom<GameState>("my_room");
+    const client = await server.connectTo(room);
+
+    room.state.arrayOfNestedSchemas.push(new NestedSchema());
+
+    await client.waitForNextPatch();
+
+    const { useColyseusState } = colyseus(client);
+
+    const Component = () => {
+      const arrayOfNestedSchemas = useColyseusState(
+        (s) => s.arrayOfNestedSchemas
+      );
+
+      return arrayOfNestedSchemas.map((schema) => (
+        <div data-testid="collection-item">
+          x:{schema.x} y:{schema.y}
+        </div>
+      ));
+    };
+
+    render(<Component />);
+
+    expect(screen.getAllByTestId("collection-item").length).toBe(
+      room.state.arrayOfNestedSchemas.length
+    );
+  });
 });

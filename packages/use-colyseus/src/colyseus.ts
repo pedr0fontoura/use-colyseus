@@ -3,7 +3,13 @@ import { type Room } from "colyseus.js";
 import { useSyncExternalStore } from "react";
 
 import { proxy } from "./proxy";
-import { isArraySchema, isMapSchema, isSchema, isSetSchema } from "./utils";
+import {
+  isArraySchema,
+  isItemCollection,
+  isMapSchema,
+  isSchema,
+  isSetSchema,
+} from "./utils";
 
 export const colyseus = <S extends Schema>(room: Room<S>) => {
   function useColyseusState(): S | undefined;
@@ -25,65 +31,70 @@ export const colyseus = <S extends Schema>(room: Room<S>) => {
       return useSyncExternalStore(subscribe, getSnapshot);
     }
 
+    // TODO(pedr0fontoura): Cache snapshot value
     const getSnapshot = () => {
-      let value: any = room.state;
+      let snapshot: any = room.state;
 
       for (let i = 0; i < path.length; i++) {
-        value = value[path[i]];
+        snapshot = snapshot[path[i]];
       }
 
-      // TODO(pedr0fontoura): See if we can optimize this
-      if (isSchema(value)) {
-        return value.clone();
+      if (isSchema(snapshot)) {
+        return snapshot.clone();
       }
 
-      if (isArraySchema(value) || isSetSchema(value) || isMapSchema(value)) {
-        return value.clone();
+      if (
+        isArraySchema(snapshot) ||
+        isSetSchema(snapshot) ||
+        isMapSchema(snapshot)
+      ) {
+        return snapshot.clone();
       }
 
-      return value;
+      return snapshot;
     };
 
+    let parent: any;
+    let key: string;
     let value: any = room.state;
 
     for (let i = 0; i < path.length; i++) {
-      if (i === path.length - 1) {
-        if (isSchema(value)) {
-          const subscribe = (callback: () => void) => {
-            // This is should be narrowed by the by the if clause above, but TS is weird.
-            const valueAsSchema = value as Schema;
-            return valueAsSchema.listen(path[i] as any, () => callback());
-          };
+      parent = value;
+      key = path[i];
+      value = parent[key];
+    }
 
-          return useSyncExternalStore(subscribe, getSnapshot);
-        }
+    if (isSchema(parent) && !isItemCollection(value)) {
+      const subscribe = (callback: () => void) => {
+        const parentAsSchema = parent as Schema;
+        return parentAsSchema.listen(key as any, () => callback());
+      };
 
-        // TODO(pedr0fontoura): Listen for changes on the collection items?
-        if (isArraySchema(value) || isSetSchema(value) || isMapSchema(value)) {
-          const subscribe = (callback: () => void) => {
-            const valueAsCollectionOfItems = value as
-              | ArraySchema
-              | SetSchema
-              | MapSchema;
+      return useSyncExternalStore(subscribe, getSnapshot);
+    }
 
-            const clearOnAddListener = valueAsCollectionOfItems.onAdd(() =>
-              callback()
-            );
-            const clearOnRemoveListener = valueAsCollectionOfItems.onRemove(
-              () => callback()
-            );
+    if (isItemCollection(value)) {
+      const subscribe = (callback: () => void) => {
+        const valueAsItemCollection = value as
+          | ArraySchema
+          | SetSchema
+          | MapSchema;
 
-            return () => {
-              clearOnAddListener();
-              clearOnRemoveListener();
-            };
-          };
+        const clearOnAddListener = valueAsItemCollection.onAdd(
+          () => callback(),
+          false
+        );
+        const clearOnRemoveListener = valueAsItemCollection.onRemove(() =>
+          callback()
+        );
 
-          return useSyncExternalStore(subscribe, getSnapshot);
-        }
-      }
+        return () => {
+          clearOnAddListener();
+          clearOnRemoveListener();
+        };
+      };
 
-      value = value[path[i]];
+      return useSyncExternalStore(subscribe, getSnapshot);
     }
 
     const subscribe = (callback: () => void) => {

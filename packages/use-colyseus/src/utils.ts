@@ -56,3 +56,7 @@ export const isMapSchema = (value: unknown): value is MapSchema => {
 
   return false;
 };
+
+export const isItemCollection = (value: unknown): boolean => {
+  return isArraySchema(value) || isSetSchema(value) || isMapSchema(value);
+};
